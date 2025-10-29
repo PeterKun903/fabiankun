@@ -77,35 +77,29 @@ WSGI_APPLICATION = 'Fabian.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 import os
+import dj_database_url
 
-USE_REMOTE_DB = True # Change to False for local development
+USE_REMOTE_DB = True  # Change to False for local development
 
 if USE_REMOTE_DB:
-    DATABASES={
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'b18jm5dpoorfztjhhb6e',  # Your Clever Cloud DB name
-            'USER': 'uonfrsmgsanx2bze',
-            'PASSWORD': 'IboJutSTQEpENnDbVmLG',
-            'HOST': 'b18jm5dpoorfztjhhb6e-mysql.services.clever-cloud.com',
-            'PORT': '3306',
-            'OPTIONS': {
-                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-            },
-        }
+    DATABASES = {
+        'default': dj_database_url.config(
+            default='mysql://uonfrsmgsanx2bze:IboJutSTQEpENnDbVmLG@b18jm5dpoorfztjhhb6e-mysql.services.clever-cloud.com:3306/b18jm5dpoorfztjhhb6e',
+            conn_max_age=600,
+        )
     }
 else:
     DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME':  'result',
-        'USER': 'root',
-        'PASSWORD': 'Nyandarua001',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'result',
+            'USER': 'root',
+            'PASSWORD': 'Nyandarua001',
+            'HOST': 'localhost',
+            'PORT': '3306',
+        }
     }
-}
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
