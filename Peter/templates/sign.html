@@ -1,0 +1,28 @@
+{% load static %}
+<html>
+    <head>
+        <title>Login</title>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+    <body class="auth-body">
+        <div class="form-cont">
+            <h2>Login</h2>
+            {% if messages %} {% for message in messages %}
+            <p style="color: red">{{ message }}</p>
+            {% endfor %} {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+                <label for="id_username">Username::</label>
+                <input type="text" name="username" required id="id_username" />
+
+                <label for="id_password">Password::</label>
+                <input type="password" name="password" required id="id_password" />
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p>Don't have an account? <a href="">Sign up</a></p>
+        </div>
+    </body>
+    </html>

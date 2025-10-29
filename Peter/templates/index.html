@@ -1,0 +1,93 @@
+{% load static %}
+<html>
+<head>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<nav>
+    <div class="logo">Fabian</div>
+    <input type="text" placeholder="Search...">
+    <div class="nav-links">
+        <a href="{% url 'signup'%}"><i class="fas fa-user-plus"></i>Signup</a>
+        <a href="{% url 'login' %}"><i class="fas fa-sign-in-alt"></i>Login</a>
+        <a href="{% url 'cart' %}"><i class="fas fa-shopping-cart"></i>Cart ({{request.session.cart|length|default:0}})</a>
+        <button  onclick="Open()">  <i class="fas fa-user-alt"></i>Profile </button>
+    </div>
+</nav>
+<div class="wrapper1">
+    <h2> CLOTHES </H2>
+<div class="container">
+    {% for product in clothes %}
+    <div class="card">
+        <a href="{% url 'product' product.id %}">
+    <img src="{{ product.image.url }}" alt="Product Image">
+</a>
+        <h4>{{ product.name }}</h4>
+        <h1>{{ product.price }}</h1>
+        <h3>{{ product.color }}</h3>
+        <h2>{{ product.size }}</h2>
+        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+        {% csrf_token %}
+        <button  type="submit" class="add-to-cart">ADD TO CART </button>
+        </form>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+<div class="wrapper2">
+    <div class="container">
+    {% for product in watches %}
+    <div class="card">
+        <a href="{% url 'product' product.id %}">
+        <img src="{{ product.image.url }}" alt="Product Image">
+        </a>
+        <h4>{{ product.name }}</h4>
+        <h1>{{ product.price }}</h1>
+        <h3>{{ product.color }}</h3>
+        <h2>{{ product.size }}</h2>
+        <form action="{% url 'add_to_cart' product.id %}" method="POST">
+        {% csrf_token %}
+        <button   type="submit" class="add-to-cart">ADD TO CART</button>
+        </form>
+    </div>
+    {% endfor %}
+</div>
+    </div>
+    <div class="footer">
+    <div class="footer-content">
+        <div class="footer-text">@Kanyango Peter</div>
+        <div class="social-links">
+            <a href="#" title="Facebook">Facebook</a>
+            <a href="#" title="LinkedIn">LinkedIn</a>
+            <a href="#" title="X">X</a>
+            <a href="#" title="Instagram">Instagram</a>
+            <a href="#" title="Whatsapp">Whatsapp</a>
+        </div>
+        <div class="footer-copyright">
+            &copy; 2025 All rights reserved.
+        </div>
+    </div>
+</div>
+    {% if user.is_authenticated %}
+<div id="profiles" class="profile">
+    <p>Name: {{ user.first_name }} {{ user.last_name }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>Username: {{ user.username }}</p>
+
+    <form method="post" action="{%url 'logout'%}">
+{% csrf_token %}
+<div class="btn1" > <button type="submit">Logout</button> </div>
+</form>
+</div>
+{% endif %}       
+    </div>
+</body>
+<script>
+    function Open(){
+    let box= document.getElementById("profiles");
+    box.style.display = (box.style.display === "block") ? "none" : "block";
+}
+</script>
+</html>

@@ -1,0 +1,20 @@
+    {% load static %}
+<html>
+    <head>
+            <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+<body>
+<div class="details">
+<div class="product-card">
+    <img src="{{product.image.url}}" alt="{{product.name}}">
+        <div class="product-info">
+
+    <div class="product-name">{{product.name}}</div>
+    <div class="product-price">Ksh{{product.price}}</div>
+    <div class="product-size">Size: {{product.size}}</div>
+    <div class="product-description">Description::{{product.description}}</div>
+    </div>
+</div>
+</div>
+</body>
+</html>

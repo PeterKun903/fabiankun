@@ -1,0 +1,44 @@
+{% load static %}
+
+<html>
+    <head>
+        <link rel="stylesheet" href="{% static 'style.css' %}">
+    </head>
+<body>
+<div class="cart-container">
+    {% for key, item in cart.items %}
+    <div class="cart-item">
+        <img src="{{ item.image }}" alt="{{ item.name }}" width="106">
+        <div class="item-details">
+        <h3>{{ item.name }}</h3>
+        <p>Quantity: {{ item.quantity }}</p>
+        <p>Price: ksh{{ item.price }}</p>
+        <form action="{%url 'add_to_cart' key%}" method="post">
+        {% csrf_token %}
+<button2 type="submit"> <span> +  </span> </button2>
+</form>
+<form action="{%url 'remove_from_cart' key%}" method="post">
+        {% csrf_token %}
+<button2 type="submit"> <span> - </span> </button2>
+</form>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="cart-total">Total: ksh{{ total }}</div>
+
+<form method="POST" action="{% url 'stkpush' %}">
+    {% csrf_token %}
+    <input type="text" name="number" required placeholder="Enter phone number">
+    <button type="submit">Lipa na Mpesa</button>
+</form>
+{% if message %}
+<p>{{ message }} </p>
+{%endif %}
+{%if error %}
+{{error}}
+{%endif %}
+
+
+</div>
+</body>
+</html>
